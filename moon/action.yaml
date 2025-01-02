@@ -1,16 +1,13 @@
 name: Moon
-description: Setup the project toolchain using Moonrepo and Prototools and run a command
+description: Setup the project toolchain using Moonrepo and Prototools
 
 inputs:
   moon-version:
     description: The version of Moonrepo to install
-    default: 'latest'
+    default: '1.30.6'
   proto-version:
     description: The version of Prototools to install
-    default: 'latest'
-  command:
-    description: The commands to run
-    required: true
+    default: '0.44.2'
 
 runs:
   using: 'composite'
@@ -21,6 +18,3 @@ runs:
         moon-version: ${{ inputs.moon-version }}
         proto-version: ${{ inputs.proto-version }}
         auto-install: true
-    - run: ${{ inputs.command }}
-      name: 🚀 Running the command
-      shell: bash

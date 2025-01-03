@@ -18,6 +18,3 @@ runs:
         moon-version: ${{ inputs.moon-version }}
         proto-version: ${{ inputs.proto-version }}
         auto-install: true
-    - name: 🚀 Running CI tasks
-      run: 'moon ci :lint-check :format-check :test'
-      shell: bash

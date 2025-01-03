@@ -14,5 +14,3 @@ runs:
       id: changesets
       with:
         publish: ${{ inputs.publish }}
-      env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

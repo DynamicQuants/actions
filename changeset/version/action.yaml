@@ -22,5 +22,3 @@ runs:
         commit: ${{ inputs.commit }}
         title: ${{ inputs.title }}
         version: ${{ inputs.version }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

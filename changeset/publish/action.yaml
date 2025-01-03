@@ -1,0 +1,18 @@
+name: Changeset Publish
+description: Create a release and publish using changeset tool
+
+inputs:
+  publish:
+    description: The publish command
+    default: 'moon ci :publish'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 📦 Publish the release
+      uses: changesets/action@v1
+      id: changesets
+      with:
+        publish: ${{ inputs.publish }}
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,4 +1,4 @@
-name: Moon
+name: Moonrepo Toolchain
 description: Setup the project toolchain using Moonrepo and Prototools
 
 inputs:

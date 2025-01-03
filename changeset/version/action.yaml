@@ -1,0 +1,26 @@
+name: Changeset Version
+description: Apply a version and create a pull request using changeset tool
+
+inputs:
+  commit:
+    description: The commit message
+    default: '🔧 chore: update version'
+  title:
+    description: The pull request title
+    default: '🔧 chore: update version'
+  version:
+    description: The version command to set the version
+    default: 'moon ci :version'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔖 Create Release Pull Request
+      uses: changesets/action@v1
+      id: changesets
+      with:
+        commit: ${{ inputs.commit }}
+        title: ${{ inputs.title }}
+        version: ${{ inputs.version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

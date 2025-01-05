@@ -1,0 +1,49 @@
+name: Pre-release
+description: |
+  Enter prerelease mode when detecting a new version or create a prerelease pull request
+  when detecting a new release.
+
+inputs:
+  tag:
+    description: The tag to enter prerelease mode
+    default: 'alpha'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🔄 Checkout the repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: 📋 Check for pre.json file existence
+      id: check_files
+      uses: andstor/file-existence-action@v3.0.0
+      with:
+        files: '.changeset/pre.json'
+
+    - name: 🌙 Setup Moonrepo and Prototools
+      uses: DynamicQuants/actions/moonrepo@main
+
+    - name: Enter prerelease mode (alpha by default)
+      # If .changeset/pre.json does not exist and we did not recently exit
+      # prerelease mode, enter prerelease mode with tag alpha
+      if: steps.check_files.outputs.files_exists == 'false' && !contains(github.event.head_commit.message, 'exit prerelease mode')
+      run: |
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config user.name "github-actions[bot]"
+        npx changeset pre enter {{ inputs.tag }}
+        git add -A
+        git commit -m '🔧 chore: enter prerelease mode'
+        git push
+      shell: bash
+
+    - name: Create prerelease PR
+      # If .changeset/pre.json exists and we are not currently cutting a release after
+      # merging a Version Packages PR
+      if: steps.check_files.outputs.files_exists == 'true' && !startsWith(github.event.head_commit.message, 'update version')
+      uses: changesets/action@v1
+      with:
+        version: npm run changeset-version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

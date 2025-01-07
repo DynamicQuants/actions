@@ -20,7 +20,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: 🔖 Create Release Pull Request or Publish to NPM
+    - name: '🔖 Create Release Pull Request or Publish to NPM'
       uses: changesets/action@v1
       id: changesets
       with:

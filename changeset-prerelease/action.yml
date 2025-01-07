@@ -48,9 +48,6 @@ runs:
         commit: '🔧 chore: update version'
         title: '🔧 chore: update version'
         version: ${{ inputs.version }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: '📦 Publish to npm + GitHub'
       id: changesets
@@ -61,9 +58,6 @@ runs:
       with:
         version: "echo 'This step should never version'"
         publish: ${{ inputs.publish }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     - name: '🏷️ Tag release on npm'
       if: steps.changesets.outcome == 'success'
